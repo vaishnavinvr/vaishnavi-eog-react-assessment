@@ -6,6 +6,7 @@ import { useGeolocation } from 'react-use';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Chip from '../../components/Chip';
 import { IState } from '../../store';
+import { MetricsActions } from '../../store/actions';
 
 const client = createClient({
   url: 'https://react.eogresources.com/graphql',
@@ -63,6 +64,10 @@ const Weather = () => {
     if (!data) return;
     const { getWeatherForLocation } = data;
     dispatch(actions.weatherDataRecevied(getWeatherForLocation));
+
+    dispatch({
+      type:MetricsActions.GET_ALL_METRICS
+    })
   }, [dispatch, data, error]);
 
   if (fetching) return <LinearProgress />;
