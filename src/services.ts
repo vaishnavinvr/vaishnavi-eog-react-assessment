@@ -17,6 +17,23 @@ export class GraphQlService {
       }
     `;
 
-    return this.client.request(query);
+    const responseData = this.client.request(query);
+    return responseData;
+  };
+
+  getMeasurements = (metricValue: string, prevTime: number, dateTime: number) => {
+    const query = gql`
+      query {
+        getMeasurements(input: { metricName: "${metricValue}", after: ${prevTime} }) {
+          metric
+          at
+          value
+          unit
+        }
+      }
+    `;
+
+    const responseData = this.client.request(query);
+    return responseData;
   };
 }
